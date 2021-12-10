@@ -1,14 +1,27 @@
 [
-  {
-    "id": 1,
-    "name": "John Allen"
+   {
+    "className": "Earth Science",
+    "students": [
+      {
+        "id": 1,
+        "name": "John Allen"
+      },
+      {
+        "id": 2,
+        "name": "Mary Green"
+      },
+      {
+        "id": 3,
+        "name": "Justin Johnson"
+      }
+    ]
   },
   {
-    "id": 2,
-    "name": "Mary Green"
+    "className": "Geology",
+    "students": []
   },
   {
-    "id": 3,
-    "name": "Justin Johnson"
+    "className": "Biology",
+    "students": []
   }
 ]

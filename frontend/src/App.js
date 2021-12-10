@@ -19,18 +19,18 @@ function App() {
   const handleChange = (e) => {
     console.log(e.target.value)
     setInputValue(() => e.target.value)
-  }
+  } 
 
   return (
     <div className="App">
       <h1>Teacher Portal</h1>
-      <h2>Student List</h2>
-      <div>{!data ? "Loading..." : data.map(data => (
-        <div>
+      <h2>Class List</h2>
+      {data && data.map((element) => (
+        <h3>{element.className}</h3>
+      ))}
+      <div>{!data ? "Loading..." : data[0].students.map(data => (
         <p>{data.name}</p>
-        </div>
-    ))}</div>
-          
+      ))}</div>
       <form onSubmit={handleSubmit}>
         <h2>Enter info</h2>
         <label>
