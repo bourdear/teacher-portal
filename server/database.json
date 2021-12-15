@@ -4,24 +4,59 @@
     "students": [
       {
         "id": 1,
-        "name": "John Allen"
+        "name": "John Allen",
+        "test-grades": []
       },
       {
         "id": 2,
-        "name": "Mary Green"
+        "name": "Mary Green",
+        "test-grades": []
       },
       {
         "id": 3,
-        "name": "Justin Johnson"
+        "name": "Justin Johnson",
+        "test-grades": []
       }
     ]
   },
   {
     "className": "Geology",
-    "students": []
+    "students": [
+      {
+        "id": 1,
+        "name": "Billy Joel",
+        "test-grades": []
+      },
+      {
+        "id": 2,
+        "name": "Aretha Franklin",
+        "test-grades": []
+      },
+      {
+        "id": 3,
+        "name": "Reba McEntire",
+        "test-grades": []
+      }
+    ]
   },
   {
     "className": "Biology",
-    "students": []
+    "students": [
+      {
+        "id": 1,
+        "name": "Samuel L. Jackson",
+        "test-grades": []
+      },
+      {
+        "id": 2,
+        "name": "Dwayne Johnson",
+        "test-grades": []
+      },
+      {
+        "id": 3,
+        "name": "Margot Robbie",
+        "test-grades": []
+      }
+    ]
   }
 ]

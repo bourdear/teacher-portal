@@ -26,11 +26,13 @@ function App() {
       <h1>Teacher Portal</h1>
       <h2>Class List</h2>
       {data && data.map((element) => (
-        <h3>{element.className}</h3>
+        <div>
+          <h3>{element.className}</h3>
+          {element.students.map((student) => (
+            <p>{student.name}</p>
+          ))}
+        </div>
       ))}
-      <div>{!data ? "Loading..." : data[0].students.map(data => (
-        <p>{data.name}</p>
-      ))}</div>
       <form onSubmit={handleSubmit}>
         <h2>Enter info</h2>
         <label>
