@@ -1,6 +1,7 @@
 [
    {
     "className": "Earth Science",
+    "id": 1,
     "students": [
       {
         "id": 1,
@@ -21,6 +22,7 @@
   },
   {
     "className": "Geology",
+    "id": 2,
     "students": [
       {
         "id": 1,
@@ -41,6 +43,7 @@
   },
   {
     "className": "Biology",
+    "id": 3,
     "students": [
       {
         "id": 1,

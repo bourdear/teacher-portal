@@ -3,13 +3,17 @@ import { useState, useEffect } from 'react'
 import './App.css';
 
 function App() {
-  const [data, setData] = useState(null)
+  const [apiData, setApiData] = useState(null)
   const [inputValue, setInputValue] = useState('')
 
   useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setData(data))
+    fetch('http://localhost:3001/api')
+      .then(res => (
+        res.json())
+      )
+      .then((data) => {
+        setApiData(data)
+      })
   }, [])
 
   const handleSubmit = (e) => {
@@ -17,7 +21,6 @@ function App() {
   }
 
   const handleChange = (e) => {
-    console.log(e.target.value)
     setInputValue(() => e.target.value)
   } 
 
@@ -25,11 +28,11 @@ function App() {
     <div className="App">
       <h1>Teacher Portal</h1>
       <h2>Class List</h2>
-      {data && data.map((element) => (
-        <div>
+      {apiData && apiData.map((element) => (
+        <div key={element.id}>
           <h3>{element.className}</h3>
           {element.students.map((student) => (
-            <p>{student.name}</p>
+            <p key={student.id}>{student.name}</p>
           ))}
         </div>
       ))}
