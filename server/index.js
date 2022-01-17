@@ -8,6 +8,7 @@ const app = express()
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'content-type')
   res.setHeader('Access-Control-Allow-Credentials', true);  
   res.sendFile(path.join(__dirname, 'database.json'));
   next();
@@ -16,6 +17,10 @@ app.use((req, res, next) => {
 app.get("/api", (req, res) => {
   let data = JSON.parse(fs.readFileSync('./server/database.json', 'utf8'))
   })
+
+app.put("/api", (req, res) => {
+  console.log("Data Recieved")
+})
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`)
