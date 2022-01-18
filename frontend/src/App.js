@@ -1,5 +1,5 @@
 import React from "react"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import './App.css';
 
 function App() {
@@ -35,6 +35,14 @@ function App() {
     resetForm()
   }
 
+  const sendData = useCallback(() => {
+    fetch(`http://localhost:3001/api`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ apiData })
+    })
+  }, [apiData])
+
   useEffect(() => {
     fetch('http://localhost:3001/api')
       .then(res => (
@@ -46,13 +54,11 @@ function App() {
       })
   }, [])
 
-  const sendData = () => {
-    fetch(`http://localhost:3001/api`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ apiData })
-    })
-  }
+  useEffect(() => {
+    if (apiData.length > 0) {
+      sendData()
+    }
+  }, [apiData, sendData])
 
   //Creates a deep copy and reverses the "show" boolean. 
   const handleClick = (e) => {
@@ -85,9 +91,9 @@ function App() {
       'test-grades': []
     }
     apiCopy[formIndex].students.push(studentObject)
-    setApiData(apiCopy)
+    setApiData(() => apiCopy)
     updateClassObject(studentObject, formIndex)
-    sendData()
+    // sendData()
   }
 
   const handleFirstName = e => {
@@ -114,7 +120,7 @@ function App() {
               <p key={student.id}>{student.name}</p>
           ))}
           {element.show && 
-            <input type='button' value='Add Student' name={element.id}  onClick={displayStudentForm}/>
+            <input type='button' value='Add Student' name={element.id} onClick={displayStudentForm}/>
           }
           {element.showStudentForm &&
             <form>

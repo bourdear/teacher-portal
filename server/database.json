@@ -1,5 +1,5 @@
 [
-   {
+  {
     "className": "Earth Science",
     "id": 1,
     "students": [
@@ -16,6 +16,11 @@
       {
         "id": 3,
         "name": "Justin Johnson",
+        "test-grades": []
+      },
+      {
+        "id": 4,
+        "name": "Rob Jones",
         "test-grades": []
       }
     ]
