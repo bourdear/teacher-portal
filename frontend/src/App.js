@@ -1,5 +1,5 @@
 import React from "react"
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css';
 
 function App() {
@@ -35,16 +35,33 @@ function App() {
     resetForm()
   }
 
-  const sendData = useCallback(() => {
+  const addStudent = () => {
+    const newStudent = `${firstName} ${lastName}`
+    const apiCopy = JSON.parse(JSON.stringify(apiData))
+    const studentObject = {
+      'id': apiCopy[formIndex].students.length + 1,
+      'name': newStudent,
+      'test-grades': []
+    }
+    apiCopy[formIndex].students.push(studentObject)
+    setApiData(() => apiCopy)
+    updateClassObject(studentObject, formIndex)
+    return apiCopy
+  }
+
+  const sendData = async (e) => {
+    e.preventDefault()
+    const sendData = await addStudent()
     fetch(`http://localhost:3001/api`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ apiData })
+      body: JSON.stringify(sendData, null, 2)
     })
-  }, [apiData])
+    console.log('Data Sent')
+  }
 
   useEffect(() => {
-    fetch('http://localhost:3001/api')
+    fetch('http://localhost:3001/')
       .then(res => (
         res.json())
       )
@@ -54,20 +71,14 @@ function App() {
       })
   }, [])
 
-  useEffect(() => {
-    if (apiData.length > 0) {
-      sendData()
-    }
-  }, [apiData, sendData])
-
   //Creates a deep copy and reverses the "show" boolean. 
-  const handleClick = (e) => {
+  const reverseShow = (e) => {
     const index = e.target.id - 1
     const arrCopy = JSON.parse(JSON.stringify(classData))
     for(let i=0; i<arrCopy.length; i++) {
       if(arrCopy[i] !== arrCopy[index])
       arrCopy[i].show = false
-      arrCopy[i].showStudentForm =  false
+      arrCopy[i].showStudentForm = false
     }
     arrCopy[index].show = !arrCopy[index].show
     arrCopy[index].showStudentForm = false
@@ -79,21 +90,6 @@ function App() {
     const arrCopy = JSON.parse(JSON.stringify(classData))
     arrCopy[index].showStudentForm = !arrCopy[index].showStudentForm
     setClassData(arrCopy)
-  }
-
-  const addStudent = e => {
-    e.preventDefault()
-    const newStudent = `${firstName} ${lastName}`
-    const apiCopy = JSON.parse(JSON.stringify(apiData))
-    const studentObject = {
-      'id': apiCopy[formIndex].students.length + 1,
-      'name': newStudent,
-      'test-grades': []
-    }
-    apiCopy[formIndex].students.push(studentObject)
-    setApiData(() => apiCopy)
-    updateClassObject(studentObject, formIndex)
-    // sendData()
   }
 
   const handleFirstName = e => {
@@ -115,7 +111,7 @@ function App() {
       <h2>Class List</h2> 
       {classData && classData.map((element) => (
         <div key={element.id}>
-          <h3 onClick={handleClick} id={element.id}>{element.className}</h3>
+          <h3 onClick={reverseShow} id={element.id}>{element.className}</h3>
           {element.show && element.students.map((student) => (
               <p key={student.id}>{student.name}</p>
           ))}
@@ -128,7 +124,7 @@ function App() {
               <input type='text' name={`fname${element.id}`} onChange={handleFirstName} key={element.id} onFocus={handleFormIndex}/>
               <label htmlFor='lname'>Last name:</label>
               <input type='text' name='lname' onChange={handleLastName}/>
-              <input type='submit' value='Submit' onClick={addStudent}/>
+              <input type='submit' value='Submit' onClick={sendData}/>
             </form>
           }
         </div>

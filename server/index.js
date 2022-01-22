@@ -12,16 +12,15 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'content-type')
   res.setHeader('Access-Control-Allow-Credentials', true);  
-  res.sendFile(path.join(__dirname, 'database.json'));
   next();
 });
 
-app.get("/api", (req, res) => {
-  let data = JSON.parse(fs.readFileSync('./server/database.json', 'utf8'))
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, 'database.json'));
   })
 
 app.put("/api", (req, res) => {
-  fs.writeFile('./server/database.json', JSON.stringify(req.body.apiData, null, 2), (err) => {
+  fs.writeFile('./server/database.json', JSON.stringify(req.body, null, 2), (err) => {
     if (err) console.log(err);
   });
   console.log('File written')
