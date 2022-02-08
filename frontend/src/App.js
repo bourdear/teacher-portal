@@ -51,6 +51,10 @@ function App() {
 
   const sendData = async (e) => {
     e.preventDefault()
+    if (firstName === '' || lastName === '') {
+      console.log('no name found')
+      return
+    }
     const sendData = await addStudent()
     fetch(`http://localhost:3001/api`, {
       method: 'PUT',
@@ -105,18 +109,21 @@ function App() {
     setFormIndex(index - 1)
   }
 
+  console.log(classData)
+
   return (
     <div className="App">
       <h1>Teacher Portal</h1>
+      <hr />
       <h2>Class List</h2> 
       {classData && classData.map((element) => (
         <div key={element.id}>
-          <h3 onClick={reverseShow} id={element.id}>{element.className}</h3>
+          <h3 onClick={reverseShow} id={element.id} className='classes'>{element.className}</h3>
           {element.show && element.students.map((student) => (
               <p key={student.id}>{student.name}</p>
           ))}
           {element.show && 
-            <input type='button' value='Add Student' name={element.id} onClick={displayStudentForm}/>
+            <input type='button' value='Add Student' name={element.id} onClick={displayStudentForm} className='add-student'/>
           }
           {element.showStudentForm &&
             <form>
