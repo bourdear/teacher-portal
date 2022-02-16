@@ -109,8 +109,6 @@ function App() {
     setFormIndex(index - 1)
   }
 
-  console.log(classData)
-
   return (
     <div className="App">
       <h1>Teacher Portal</h1>
@@ -131,7 +129,7 @@ function App() {
               <input type='text' name={`fname${element.id}`} onChange={handleFirstName} key={element.id} onFocus={handleFormIndex}/>
               <label htmlFor='lname'>Last name:</label>
               <input type='text' name='lname' onChange={handleLastName}/>
-              <input type='submit' value='Submit' onClick={sendData}/>
+              <input type='submit' value='Submit' className='add-student' onClick={sendData}/>
             </form>
           }
         </div>

@@ -1,3 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Raleway:wght@200;400;700&display=swap');
+
+
+body {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 200;
+}
+
+h1 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 40px;
+}
+
+h3 {
+  font-weight: 400;
+}
+
+.add-student {
+  border-radius: 15px;
+  border: solid 2px rgb(212, 212, 212);
+  background: white;
+  padding: 5px;
+  width: 150px;
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+.add-student:hover {
+  background: 2px rgb(212, 212, 212);
+}
+
+.classes:hover, .add-student:hover {
+  cursor: pointer;
+}
+
 .App {
   text-align: center;
 }
