@@ -1,0 +1,14 @@
+.add-student {
+  border-radius: 15px;
+  border: solid 2px rgb(212, 212, 212);
+  background: white;
+  padding: 5px;
+  width: 150px;
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+.add-student:hover {
+  background: 2px rgb(212, 212, 212);
+  cursor: pointer;
+}

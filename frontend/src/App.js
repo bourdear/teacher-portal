@@ -1,5 +1,6 @@
 import React from "react"
 import { useState, useEffect } from 'react'
+import Button from './components/Button'
 import './App.css';
 
 function App() {
@@ -116,12 +117,16 @@ function App() {
       <h2>Class List</h2> 
       {classData && classData.map((element) => (
         <div key={element.id}>
-          <h3 onClick={reverseShow} id={element.id} className='classes'>{element.className}</h3>
+          <h3 onClick={reverseShow} id={element.id} className='courses'>{element.className}</h3>
           {element.show && element.students.map((student) => (
               <p key={student.id}>{student.name}</p>
           ))}
           {element.show && 
-            <input type='button' value='Add Student' name={element.id} onClick={displayStudentForm} className='add-student'/>
+            <Button type={'button'}
+             value={'Add Student'}
+             name={element.id}
+             handleClick={displayStudentForm}
+             />
           }
           {element.showStudentForm &&
             <form>
@@ -129,7 +134,7 @@ function App() {
               <input type='text' name={`fname${element.id}`} onChange={handleFirstName} key={element.id} onFocus={handleFormIndex}/>
               <label htmlFor='lname'>Last name:</label>
               <input type='text' name='lname' onChange={handleLastName}/>
-              <input type='submit' value='Submit' className='add-student' onClick={sendData}/>
+              <Button type={'button'} value={'Submit'} handleClick={sendData} />
             </form>
           }
         </div>

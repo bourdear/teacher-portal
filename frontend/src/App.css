@@ -30,7 +30,7 @@ h3 {
   background: 2px rgb(212, 212, 212);
 }
 
-.classes:hover, .add-student:hover {
+.courses:hover, .add-student:hover {
   cursor: pointer;
 }
 
