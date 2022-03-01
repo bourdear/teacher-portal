@@ -2,6 +2,7 @@ import React from "react"
 import { useState, useEffect } from 'react'
 import AddForm from './components/AddForm'
 import Button from './components/Button'
+import Course from './components/Course'
 import './App.css';
 
 function App() {
@@ -118,10 +119,7 @@ function App() {
       <h2>Class List</h2> 
       {classData && classData.map((element) => (
         <div key={element.id}>
-          <h3 onClick={reverseShow} id={element.id} className='courses'>{element.className}</h3>
-          {element.show && element.students.map((student) => (
-              <p key={student.id}>{student.name}</p>
-          ))}
+          <Course handleClick={reverseShow} element={element} />
           {element.show && 
             <Button type={'button'}
              value={'Add Student'}
