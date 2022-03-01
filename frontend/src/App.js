@@ -1,5 +1,6 @@
 import React from "react"
 import { useState, useEffect } from 'react'
+import AddForm from './components/AddForm'
 import Button from './components/Button'
 import './App.css';
 
@@ -129,13 +130,15 @@ function App() {
              />
           }
           {element.showStudentForm &&
-            <form>
-              <label htmlFor={`fname${element.id}`}>First name:</label>
-              <input type='text' name={`fname${element.id}`} onChange={handleFirstName} key={element.id} onFocus={handleFormIndex}/>
-              <label htmlFor='lname'>Last name:</label>
-              <input type='text' name='lname' onChange={handleLastName}/>
-              <Button type={'button'} value={'Submit'} handleClick={sendData} />
-            </form>
+            <AddForm textBox={2}
+            element={element}
+            boxOneLabel={'First Name:'}
+            boxTwoLabel={'Last Name'}
+            handleFirstChange={handleFirstName}
+            handleSecondChange={handleLastName}
+            handleFocus={handleFormIndex}
+            button={<Button type={'button'} value={'Submit'} handleClick={sendData} />}
+            />
           }
         </div>
       ))}
