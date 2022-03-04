@@ -10,32 +10,90 @@ function App() {
   const [classData, setClassData] = useState([])
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
+  const [courseForm, setCourseForm] = useState(false)
+  const [courseName, setCourseName] = useState('')
   const [formIndex, setFormIndex] = useState('')
+
+  const classObj = (data, index) => {
+    if (data.length > 1) {
+      return (
+        {
+          'id': data[index].id,
+          'className': data[index].className,
+          'show': false,
+          'showStudentForm': false,
+          'students': data[index].students
+        }
+    )} else {
+      return (
+        {
+        'id': data.id,
+        'className': data.className,
+        'show': false,
+        'showStudentForm': false,
+        'students': data.students
+        }
+      )
+    }
+  }
 
   const createClassObject = data => {
     for(let i = 0; i < data.length; i++) {
-        const  classObject= {
-          'id': data[i].id,
-          'className': data[i].className,
-          'show': false,
-          'showStudentForm': false,
-          'students': data[i].students
-        }
+        const classObject= classObj(data, i)
         setClassData(classData => [...classData, classObject])
     }
   }
 
-  const resetForm = () => {
+  const resetStudentForm = () => {
     setFirstName('')
     setLastName('')
   }
 
-  const updateClassObject = (studentObject, index) => {
+  const updateCourse = (data) =>  {
+    const classObject = classObj(data, 0)
+    setClassData(classData => [...classData, classObject])
+    setCourseName(() => '')
+  }
+
+  const updateStudentList = (studentObject, index) => {
     const arrCopy = JSON.parse(JSON.stringify(classData))
     arrCopy[index].students.push(studentObject)
     arrCopy[index].showStudentForm = false
     setClassData(arrCopy)
-    resetForm()
+    resetStudentForm()
+  }
+
+  const handlePut = (data) => {
+    fetch(`http://localhost:3001/api`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data, null, 2)
+    })
+    console.log('data sent')
+  }
+
+  const addCourse = courseName => {
+    const apiCopy = JSON.parse(JSON.stringify(apiData))
+    const classObject = {
+      'className': courseName,
+      'id': classData.length + 1,
+      'students': []
+    }
+    apiCopy.push(classObject)
+    setApiData(() => apiCopy)
+    updateCourse(classObject)
+    return apiCopy
+  }
+
+  const sendCourseData = async (e) => {
+    e.preventDefault()
+    if (courseName === '') {
+      console.log('no course found')
+      return
+    }
+    const newCourseData = await addCourse(courseName)
+    handlePut(newCourseData)
+    setCourseName('')
   }
 
   const addStudent = () => {
@@ -48,23 +106,18 @@ function App() {
     }
     apiCopy[formIndex].students.push(studentObject)
     setApiData(() => apiCopy)
-    updateClassObject(studentObject, formIndex)
+    updateStudentList(studentObject, formIndex)
     return apiCopy
   }
 
-  const sendData = async (e) => {
+  const sendStudentData = async (e) => {
     e.preventDefault()
     if (firstName === '' || lastName === '') {
       console.log('no name found')
       return
     }
-    const sendData = await addStudent()
-    fetch(`http://localhost:3001/api`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(sendData, null, 2)
-    })
-    console.log('Data Sent')
+    const newStudentData = await addStudent()
+    handlePut(newStudentData)
   }
 
   useEffect(() => {
@@ -99,12 +152,20 @@ function App() {
     setClassData(arrCopy)
   }
 
+  const expandCourseForm  = e => {
+    setCourseForm(!courseForm)
+  }
+
   const handleFirstName = e => {
     setFirstName(() => e.target.value)
   } 
 
   const handleLastName = e => {
     setLastName(() => e.target.value)
+  }
+
+  const handleCourseName = e => {
+    setCourseName(() => e.target.value)
   }
 
   const handleFormIndex = e => {
@@ -120,7 +181,7 @@ function App() {
       {classData && classData.map((element) => (
         <div key={element.id}>
           <Course handleClick={reverseShow} element={element} />
-          {element.show && 
+          {element.show && !element.showStudentForm &&
             <Button type={'button'}
              value={'Add Student'}
              name={element.id}
@@ -130,16 +191,28 @@ function App() {
           {element.showStudentForm &&
             <AddForm textBox={2}
             element={element}
+            firstName={firstName}
+            lastName={lastName}
             boxOneLabel={'First Name:'}
             boxTwoLabel={'Last Name'}
             handleFirstChange={handleFirstName}
             handleSecondChange={handleLastName}
             handleFocus={handleFormIndex}
-            button={<Button type={'button'} value={'Submit'} handleClick={sendData} />}
+            button={<Button type={'button'} value={'Submit'} handleClick={sendStudentData} />}
             />
           }
         </div>
       ))}
+      {!courseForm && 
+        <Button type={'button'} value={'Add Class'} handleClick={expandCourseForm} />
+      }
+        {courseForm &&
+      <AddForm textBox={1}
+        boxOneLabel={'Add Class: '}
+        handleFirstChange={handleCourseName}
+        course={courseName}
+        button={<Button type={'button'} value={'Submit'} handleClick={sendCourseData} />}
+      />}
     </div>
   );
 }

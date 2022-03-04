@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
   })
 
 app.put("/api", (req, res) => {
-  fs.writeFile('./server/database.json', JSON.stringify(req.body, null, 2), (err) => {
+  fs.writeFile('./server/database.json', JSON.stringify(req.body, null, 2),{ flags: 'a' }, (err) => {
     if (err) console.log(err);
   });
   console.log('File written')
