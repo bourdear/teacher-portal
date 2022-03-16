@@ -182,8 +182,7 @@ function App() {
         <div key={element.id}>
           <Course handleClick={reverseShow} element={element} />
           {element.show && !element.showStudentForm &&
-            <Button type={'button'}
-             value={'Add Student'}
+            <Button value={'Add Student'}
              name={element.id}
              handleClick={displayStudentForm}
              />
@@ -198,20 +197,20 @@ function App() {
             handleFirstChange={handleFirstName}
             handleSecondChange={handleLastName}
             handleFocus={handleFormIndex}
-            button={<Button type={'button'} value={'Submit'} handleClick={sendStudentData} />}
+            button={<Button value={'Submit'} handleClick={sendStudentData} />}
             />
           }
         </div>
       ))}
       {!courseForm && 
-        <Button type={'button'} value={'Add Class'} handleClick={expandCourseForm} />
+        <Button value={'Add Class'} handleClick={expandCourseForm} />
       }
         {courseForm &&
       <AddForm textBox={1}
         boxOneLabel={'Add Class: '}
         handleFirstChange={handleCourseName}
         course={courseName}
-        button={<Button type={'button'} value={'Submit'} handleClick={sendCourseData} />}
+        button={<Button value={'Submit'} handleClick={sendCourseData} />}
       />}
     </div>
   );

@@ -1,8 +1,8 @@
 import React from 'react'
 import './Button.css'
 
-const Button = ({ type, value, name, handleClick }) => (
-  <input type={type}
+const Button = ({ value, name, handleClick }) => (
+  <input type='button'
    value={value} 
    name={name}
    onClick={handleClick}
