@@ -188,17 +188,11 @@ function App() {
              />
           }
           {element.showStudentForm &&
-            <AddForm textBox={2}
-            element={element}
-            firstName={firstName}
-            lastName={lastName}
-            boxOneLabel={'First Name:'}
-            boxTwoLabel={'Last Name'}
-            handleFirstChange={handleFirstName}
-            handleSecondChange={handleLastName}
-            handleFocus={handleFormIndex}
-            button={<Button value={'Submit'} handleClick={sendStudentData} />}
-            />
+            <div>
+              <AddForm inputName={`firstName${element.id}`} labelText={'First Name'} inputValue={firstName} handleFocus={handleFormIndex} handleChange={handleFirstName}/>
+              <AddForm inputName={`lastName${element.id}`} labelText={'Last Name'} inputValue={lastName} handleChange={handleLastName}/>
+              <Button value={'Submit'} handleClick={sendStudentData} />
+            </div>
           }
         </div>
       ))}
@@ -206,12 +200,11 @@ function App() {
         <Button value={'Add Class'} handleClick={expandCourseForm} />
       }
         {courseForm &&
-      <AddForm textBox={1}
-        boxOneLabel={'Add Class: '}
-        handleFirstChange={handleCourseName}
-        course={courseName}
-        button={<Button value={'Submit'} handleClick={sendCourseData} />}
-      />}
+          <div>
+            <AddForm inputName={'newCourse'} labelText={'Add Class: '} inputValue={courseName} handleChange={handleCourseName}/>
+            <Button value={'Submit'} handleClick={sendCourseData} />
+          </div>
+        }
     </div>
   );
 }
